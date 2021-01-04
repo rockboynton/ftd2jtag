@@ -37,7 +37,7 @@ def main():
     idcode_opcode = get_idcode_opcode(bsdl_as_json)
     led_d1, led_d2 = get_led_boundary_idx(bsdl_as_json, 39, 38)
 
-    device = setup_device()
+    device = setup_device(FTDI_CABLE)
 
     verify_idcode(device, real_idcode, idcode_opcode)
 
@@ -179,8 +179,8 @@ def get_real_idcode(bsdl_as_json):
     return idcode
 
 
-def setup_device():
-    device = ftd.openEx(FTDI_CABLE)  # open FTDI cable by serial number
+def setup_device(device_serial):
+    device = ftd.openEx(device_serial)  # open FTDI cable by serial number
     device.resetDevice()  # reset device mode
     device.setBitMode(0, MPSSE_MODE)  # set MPSSE mode
     set_jtag_clock(device, 3e6)  # use a 3 MHz clock
