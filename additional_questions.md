@@ -1,7 +1,10 @@
 # Additional Questions (and Answers)
 
 1. What is the architecture of your implementation? Show a detailed schematic and connection diagram.
-    * **TODO**
+    * Schematic:
+      ![Schematic](img/schematic_diagram.png)
+    * Connection Diagram:
+      ![Connection Diagram](img/connection_diagram.png)
 
 2. Describe the operation of your solution in detail. Were there any designs that you tried but didn’t use?
     * My solution utilizes the Python [`ftd2xx`](https://github.com/cyrozap/python-bsdl-parser) library to communicate with the
@@ -16,7 +19,8 @@
     * I also tried using the Python `pyftdi` library, but although it has many
       more useful features than `ftd2xx`, including some JTAG capabilities, it
       required the use of a different driver than what is automatically
-      installed on a Windows machine. I chose to go with `ftd2xx` due to its
+      installed on a Windows machine. Thus, the user would have to use another utility to swap the
+      driver themselves. I chose to go with `ftd2xx` due to its
       simplicity as well as its ability to plug-and-play. One downside to this
       choice is that `ftd2xx` is no longer actively maintained, however I feel
       like I can probably be a maintainer after spending a decent amount of time
@@ -66,10 +70,16 @@
       the FTDI Application Note AN_129
       ![JTAG Tap Controller](img/jtag_tap_controller.png)
 
+    * The [CoolRunner-II Programmer Qualification
+      Specification](https://ia801201.us.archive.org/0/items/CoolRunnerIIProgrammerQualificationSpecification/CoolRunner-II%20Programmer%20Qualification%20Specification.pdf)
+      also shows the JTAG block diagram although I am not sure why it shows 200 bits for the
+      boundary scan register when it is in fact 192 bits
+      ![JTAG Block Diagram](img/JTAG_block_diagram.png)
+
 5. What IDCODE did you read from the chip? Show screenshots of the JTAG signals performing the IDCODE read.
     * IDCODE read was **0x06e5e093** which matches the IDCODE found in the BSDL
       file. The figure below shows an annotated screenshot of the JTAG signals
-      captured using the Analog Discovery 2 with WaveForms Logic Analyzer.
+      captured using the Analog Discovery 2 with [WaveForms Logic Analyzer](tests/waveforms/jtag.dwf3logic)
       ![Reading IDCODE](img/read_idcode_annotated.png)
 
 6. How did you make the LEDs blink? Show some screenshots of the JTAG signals performing the writes.
@@ -138,7 +148,12 @@
 8. Describe how you would set up the code in source control. What would the folder/file structure look like?
     * To set this us in source control, I would follow something similar to
       [this](https://docs.python-guide.org/writing/structure/#structure-of-the-repository).
-    * `./ftd2jtag.py` - the actual module
+    * `./ftd2jtag` - the actual module
+    * `./ftd2jtag/ftd2jtag.py` - file containing utility methods relating to setting up the
+      device for communication via JTAG
+    * `./ftd2jtag/idcode.py` - IDCODE specific methods
+    * `./ftd2jtag/extest.py` - EXTEST specific methods
+    * `./ftd2jtag/mpsse_commands.py` - MPSSE command definitions
     * `./README.md` - for giving an overview of the project and information on
       installing dependencies and running the code. Python programs typically use a .rst file but I am
       more familiar with .md at the moment
@@ -146,42 +161,49 @@
     * `./setup.py` - for package and distribution management
     * `./requirements.txt` - for development dependencies
     * `./docs` - (optional) for a project this size, the README should be enough
-    * `./tests` - test directory, consisting of unit tests for the module
+    * `./tests` - test directory, may contain unit tests for the module or additional files to
+      facilitate testing, e.g. BSDL files and Waveforms project
+    * `./jtag_exercise.py` - Script for completing the exercise using the module
 
 9. In the future, we need to implement JTAG control for more chips.
 
     a. What additional code needs to be written for each new chip? What code can
     be reused?
       * Getting the IDCODE for other chips would not require any changes to the
-        code base, as it would only require the new chip's BSDL file to be read.
+        code base, as it would only require the new chip's BSDL file to be read
 
       * Performing an EXTEST to set and clear pins would require minimal additional
-        code.
+        code. One basic thing is to make the code more generic for setting/clearing pins rather than
+        LEDs specifically. Also, it could take in lists of pins rather than a fixed number.
 
       * Adding other JTAG control functionality would require additional code to
-        be written. Perhaps each instruction could have its own folder in
+        be written.
 
     b. Where would this code be inserted into the folder/file structure?
-      * Perhaps each instruction could have its own file in the module folder
-      * Tests for that module would be in the tests directory
+      * Functionality related to IDCODE or EXTEST would have additional/modified methods in
+        `ftd2jtag\idcode.py` and `ftd2jtag\extest.py`, respectively.
+      * Other instructions would have their own file in the module folder.
+      * Tests for that module would be in the tests directory.
 
 10. How would various portions of the codebase be tested? How do you have confidence that the
     software controlling the chips is doing the right thing?
     * I tried to break it down into relatively small methods, each of which can
-      be unit tested.
+      be unit tested, which I just ad-hoc tested for now, but they really should have formal tests.
+      One way I did that was using print statements.
 
     * Seeing the signals in WaveForms with the Analog discovery gives me
       confidence that the software is doing the right thing.
+
 11. Must any 3rd-party libraries or software be installed on a PC to run the
     test program?
-    * Yes, `ftd2xx` and `bsdl-parser`
+    * Yes, Python (developed with 3.9.1 but should work for >3.6) and the python libraries `ftd2xx` and `bsdl-parser`
 
 12. Are there any specific patterns or “best practices” that you found helpful
     and used in your code?
     * Resetting the FTDI device and resetting the JTAG TAP controllers were a
       couple "best practices" I learned in my research and I found it helpful to
       make sure I was in a known state before doing anything. In fact, an
-      interesting thing that happens when putting the JTAG TAP into rest is that
+      interesting thing that happens when putting the JTAG TAP into reset is that
       the IDCODE instruction is loaded and you can go straight to Shift-DR and
       read it instead of writing the instruction first.
 
@@ -202,3 +224,6 @@
     * As more JTAG control functionality gets implemented it might have been prudent to complete
       this exercise in an object-oriented fashion, similar to how the
       [`pyftdi` library](https://pypi.org/project/pyftdi/) is set up
+
+    * I'm also a fan of Test-Driven Development and if I were to do this over, I would have written
+      tests first
