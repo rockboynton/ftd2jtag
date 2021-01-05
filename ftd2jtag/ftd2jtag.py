@@ -14,6 +14,14 @@ TMS = 0x08
 
 
 def bsdl2json(filename):
+    """Parses a BSDL file into JSON
+
+    Args:
+        filename (str): BSDL file (.bsd)
+
+    Returns:
+        dict: BSDL file as JSON
+    """
     with open(filename) as f:
         text = f.read()
         parser = bsdlParser()
@@ -21,16 +29,42 @@ def bsdl2json(filename):
         return ast.asjson()
 
 
-def set_jtag_clock(d, hz):
-    """Set the JTAG clock divisor (AN 108 §3.8.2)"""
+def set_jtag_clock(device, hz):
+    """Set the JTAG clock divisor (AN 108 §3.8.2)
+
+    Args:
+        device (FTD2XX): FTDI device
+        hz (float | int): desired frequency of the JTAG clock
+    """
     div = int((12e6 / (hz * 2)) - 1)
-    d.write(bytes((SET_TCK_DIVISOR, div % 256, div // 256)))
+    device.write(bytes((SET_TCK_DIVISOR, div % 256, div // 256)))
 
 
 def setup_device(device_serial):
+    """Sets up the device to control a DUT using JTAG
+
+    Args:
+        device_serial (bytes): bytes object representing the serial number of the FTDI device
+
+    Returns:
+        FTD2XX: FTDI device
+    """
     device = ftd.openEx(device_serial)  # open FTDI cable by serial number
     device.resetDevice()  # reset device mode
     device.setBitMode(0, MPSSE_MODE)  # set MPSSE mode
     set_jtag_clock(device, 3e6)  # use a 3 MHz clock
     device.write(bytes((SET_BITS_LOW, TMS, TCK | TDI | TMS)))  # configure outputs
     return device
+
+
+def get_opcode_length(bsdl_as_json):
+    """Gets the OPCODE length
+
+    Args:
+        bsdl_as_json (dict): BSDL file parsed into JSON
+
+    Returns:
+        int: opcode length
+    """
+    opcode_length = bsdl_as_json["instruction_register_description"]["instruction_length"]
+    return int(opcode_length)
