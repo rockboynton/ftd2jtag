@@ -13,25 +13,21 @@ The program:
 1. Reads back the unique IDCODE from the XC2C64A chip, and compares it to the IDCODE in the chip’s datasheet.
 2. Blinks D1 and D2 (alternating) at 0.5Hz
 
+The module written can be extended to implement JTAG control over other chips.
+
 ## Equipment
 
 The equipment needed to complete this exercise includes:
 
-* CoolRunner-II Development Board
+* [CoolRunner-II Development Board](img/coolrunner_II_dev_board.jpg)
 
-  ![CoolRunner-II Development Board](img/coolrunner_II_dev_board.jpg)
+* [FTDI C232HM-DDHSL-0 USB Dongle](img\C232HM.webp)
 
-* FTDI C232HM-DDHSL-0 USB Dongle
+* [Analog Discovery 2](img\analog_discovery_2.jpg) (optional, for development/debugging)
 
-  ![FTDI C232HM-DDHSL-0 USB Dongle](img\C232HM.webp)
+* [Breadboard](img\breadboard.jpg) (optional, for development/debugging)
 
-* Analog Discovery 2 (optional, for development/debugging)
-
-  ![Analog Discovery 2](img\analog_discovery_2.jpg)
-
-* Breadboard (optional, for development/debugging)
-
-  ![Breadboard](img\breadboard.jpg)
+* Python >3.6
 
 ## Resources
 
@@ -52,8 +48,11 @@ manufacturer websites was crucial to completing the exercise.
 * [FTDI Application Note AN_108 Command Processor for MPSSE...](https://www.ftdichip.com/Support/Documents/AppNotes/AN_108_Command_Processor_for_MPSSE_and_MCU_Host_Bus_Emulation_Modes.pdf)
 * [FTDI Application Note AN_129 Interfacing FTDI USB Hi-Speed Devices to a JTAG TAP](https://www.ftdichip.com/Support/Documents/AppNotes/AN_129_FTDI_Hi_Speed_USB_To_JTAG_Example.pdf)
 * [CoolRunner-II BSDL files](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/device-models/bsdl-models/cplds.html)
+* [CoolRunner-II Programmer Qualification Specification](https://ia801201.us.archive.org/0/items/CoolRunnerIIProgrammerQualificationSpecification/CoolRunner-II%20Programmer%20Qualification%20Specification.pdf)
 
 ## Dependencies
+
+[Python >3.6](https://www.python.org/downloads/)
 
 [ftd2xx](https://pypi.org/project/ftd2xx/)
 
