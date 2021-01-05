@@ -1,3 +1,5 @@
+"""JTAG setup support and utility functions """
+
 import ftd2xx as ftd
 from bsdl_parser.bsdl import bsdlParser
 from bsdl_parser.bsdl2json import BsdlSemantics
