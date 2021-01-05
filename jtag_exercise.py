@@ -1,3 +1,22 @@
+"""This is a small software application that interacts with a Xilinx XC2C64A chip mounted on a
+CoolRunner-II development board.
+
+The program:
+
+1. Reads back the unique IDCODE from the XC2C64A chip, and compares it to the IDCODE in the chip’s datasheet.
+2. Blinks D1 and D2 (alternating) at 0.5Hz
+
+Wiring:
+C232HM  |  XC2C64A
+------------------
+Red     |  JTAG 3V3
+Black   |  JTAG GND
+Orange  |  JTAG TCK
+Yellow  |  JTAG TDI
+Green   |  JTAG TDO
+Brown   |  JTAG TMS
+"""
+
 from ftd2jtag.ftd2jtag import bsdl2json, setup_device
 from ftd2jtag.idcode import get_real_idcode, get_idcode_opcode, verify_idcode
 from ftd2jtag.extest import get_led_boundary_idx, get_boundary_length, blink_leds
