@@ -194,6 +194,9 @@
     * Seeing the signals in WaveForms with the Analog discovery gives me
       confidence that the software is doing the right thing.
 
+    * To test this would work on other machines, I also made a private repo in GitHub and cloned it
+      on a separate PC, followed the [Installation](README.md#Installation) and [Usage](README.md#Usage) steps to verify proper functionality.
+
 11. Must any 3rd-party libraries or software be installed on a PC to run the
     test program?
     * Yes, Python (developed with 3.9.1 but should work for >3.6) and the python libraries `ftd2xx` and `bsdl-parser`.
