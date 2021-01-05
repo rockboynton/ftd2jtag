@@ -29,15 +29,27 @@ The equipment needed to complete this exercise includes:
 
 * Python >3.6
 
-## Usage
+## Installation
 
 Wire up the project according to the connection diagram:
 ![Wiring Diagram](img/connection_diagram.png)
 
-On Windows (powershell), run:
+This code is tested to run on Windows 10 in Powershell
+
+I recommend creating a virtual environment before running, but this is optional:
+
+```powershell
+PS path\to\ftd2jtag> py -m venv env
+PS path\to\ftd2jtag> .\env\Scripts\activate
+```
 
 ```powershell
 PS path\to\ftd2jtag> pip install -r requirements.txt
+```
+
+## Usage
+
+```powershell
 PS path\to\ftd2jtag> py .\jtag_exercise.py
 ```
 
