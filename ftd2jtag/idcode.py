@@ -55,10 +55,11 @@ def read_idcode_opcode(device, idcode_opcode):
     Returns:
         str: IDCODE read from chip
     """
+    opcode_length = len(idcode_opcode)
     data = bytearray()
     data.extend((WRITE_BITS_TMS_NVE, 4, 0b11111))  # go to reset
     data.extend((WRITE_BITS_TMS_NVE, 4, 0b00110))  # go to shift-ir
-    data.extend((WRITE_BITS_NVE_LSB, 6, int(idcode_opcode)))  # shift in IDCODE opcode
+    data.extend((WRITE_BITS_NVE_LSB, opcode_length - 2, int(idcode_opcode)))  # shift IDCODE opcode
     data.extend((WRITE_BITS_TMS_NVE, 4, 0b00111))  # go to shift-dr
     data.extend((READ_BYTES_NVE_LSB, 3, 0))  # read command
     device.write(bytes(data))  # send off MPSSE commands
