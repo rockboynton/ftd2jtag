@@ -196,7 +196,8 @@
 
 11. Must any 3rd-party libraries or software be installed on a PC to run the
     test program?
-    * Yes, Python (developed with 3.9.1 but should work for >3.6) and the python libraries `ftd2xx` and `bsdl-parser`
+    * Yes, Python (developed with 3.9.1 but should work for >3.6) and the python libraries `ftd2xx` and `bsdl-parser`.
+    * To get a full list of dependencies, see [requirements.txt](requirements.txt)
 
 12. Are there any specific patterns or “best practices” that you found helpful
     and used in your code?
@@ -223,7 +224,11 @@
 
     * As more JTAG control functionality gets implemented it might have been prudent to complete
       this exercise in an object-oriented fashion, similar to how the
-      [`pyftdi` library](https://pypi.org/project/pyftdi/) is set up
+      [`pyftdi` library](https://pypi.org/project/pyftdi/) is set up.
 
     * I'm also a fan of Test-Driven Development and if I were to do this over, I would have written
-      tests first
+      tests first.
+
+    * I'm not sure if I'd be allowed to open-source this, but if so, I'd like to [package it
+      up](https://packaging.python.org/tutorials/packaging-projects/) and put it on PyPI, so maybe others
+      could use it and contribute!
