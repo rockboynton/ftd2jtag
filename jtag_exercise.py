@@ -16,15 +16,17 @@ led_d1, led_d2 = get_led_boundary_idx(bsdl_as_json, 39, 38)
 
 device = setup_device(FTDI_CABLE)
 
-print('Verifying IDCODE...')
+print("Verifying IDCODE...")
 if verify_idcode(device, real_idcode, idcode_opcode):
-    print("\tIDCODE read matches real IDCODE from BSDL file! ")
+    print(f"\tIDCODE read matches real IDCODE 0x{int(real_idcode.replace('X', '0'), 2):04x} from BSDL file! ")
 else:
     exit(-1)
 
-print('Blinking LEDs...')
-blink_leds(device, led_d1, led_d2, cycles=3, frequency=0.5)
+cycles = 3
+frequency = 0.5
+print(f"Blinking LEDs at {frequency} Hz for {cycles} cycles...")
+blink_leds(device, led_d1, led_d2, cycles=cycles, frequency=frequency)
 
-print('Done!')
+print("Done!")
 
 device.close()
