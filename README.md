@@ -29,6 +29,21 @@ The equipment needed to complete this exercise includes:
 
 * Python >3.6
 
+## Usage
+
+Wire up the project according to the connection diagram:
+![Wiring Diagram](img/connection_diagram.png)
+
+On Windows (powershell), run:
+
+```powershell
+PS path\to\ftd2jtag> pip install -r requirements.txt
+PS path\to\ftd2jtag> py .\jtag_exercise.py
+```
+
+You may also view the JTAG signals in the [WaveForms project](tests/waveforms/jtag.dwf3logic) using
+the Analog Discovery 2.
+
 ## Resources
 
 Finding the right datasheets, schematics, and other files from the
