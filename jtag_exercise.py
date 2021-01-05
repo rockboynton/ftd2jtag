@@ -1,6 +1,6 @@
 from ftd2jtag.ftd2jtag import bsdl2json, setup_device
 from ftd2jtag.idcode import get_real_idcode, get_idcode_opcode, verify_idcode
-from ftd2jtag.extest import get_led_boundary_idx, blink_leds
+from ftd2jtag.extest import get_led_boundary_idx, get_boundary_length, blink_leds
 
 # Serial number of the FTDI C232HM-DDHSL-0 USB dongle
 FTDI_CABLE = b"FTXQNTSO"
@@ -14,6 +14,8 @@ idcode_opcode = get_idcode_opcode(bsdl_as_json)
 
 led_d1, led_d2 = get_led_boundary_idx(bsdl_as_json, 39, 38)
 
+boundary_length = get_boundary_length(bsdl_as_json)
+
 device = setup_device(FTDI_CABLE)
 
 print("Verifying IDCODE...")
@@ -25,7 +27,7 @@ else:
 cycles = 3
 frequency = 0.5
 print(f"Blinking LEDs at {frequency} Hz for {cycles} cycles...")
-blink_leds(device, led_d1, led_d2, cycles=cycles, frequency=frequency)
+blink_leds(device, boundary_length, led_d1, led_d2, cycles=cycles, frequency=frequency)
 
 print("Done!")
 
