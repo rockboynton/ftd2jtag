@@ -24,6 +24,9 @@ from ftd2jtag.extest import get_led_boundary_idx, get_boundary_length, blink_led
 # Serial number of the FTDI C232HM-DDHSL-0 USB dongle
 FTDI_CABLE = b"FTXQNTSO"
 
+LED_D1_PIN = 39
+LED_D2_PIN = 38
+
 
 bsdl_as_json = bsdl2json("tests/bsdl/xc2c64a_vq44.bsd")
 
@@ -31,7 +34,7 @@ real_idcode = get_real_idcode(bsdl_as_json)
 
 idcode_opcode = get_idcode_opcode(bsdl_as_json)
 
-led_d1, led_d2 = get_led_boundary_idx(bsdl_as_json, 39, 38)
+led_d1, led_d2 = get_led_boundary_idx(bsdl_as_json, LED_D1_PIN, LED_D2_PIN)
 
 boundary_length = get_boundary_length(bsdl_as_json)
 
