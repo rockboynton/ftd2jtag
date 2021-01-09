@@ -88,3 +88,9 @@ manufacturer websites was crucial to completing the exercise.
 ## Additional Q&A
 
 [additional_questions.md](additional_questions.md)
+
+## Author
+
+Rock Boynton - [Portfolio website](https://rockboynton.com)
+                | [GitHub](https://github.com/rockboynton)
+                | [LinkedIn](https://linkedin.com/in/rock-boynton)
