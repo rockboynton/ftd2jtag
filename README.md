@@ -84,3 +84,7 @@ manufacturer websites was crucial to completing the exercise.
 [ftd2xx](https://pypi.org/project/ftd2xx/)
 
 [bsdl-parser](https://pypi.org/project/bsdl-parser/)
+
+## Additional Q&A
+
+[additional_questions.md](additional_questions.md)
