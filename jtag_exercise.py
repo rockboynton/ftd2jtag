@@ -16,7 +16,6 @@ Yellow  |  JTAG TDI
 Green   |  JTAG TDO
 Brown   |  JTAG TMS
 """
-
 from ftd2jtag.ftd2jtag import bsdl2json, setup_device
 from ftd2jtag.idcode import get_real_idcode, get_idcode_opcode, verify_idcode
 from ftd2jtag.extest import get_led_boundary_idx, get_boundary_length, blink_leds
@@ -42,7 +41,9 @@ device = setup_device(FTDI_CABLE)
 
 print("Verifying IDCODE...")
 if verify_idcode(device, real_idcode, idcode_opcode):
-    print(f"\tIDCODE read matches real IDCODE 0x{int(real_idcode.replace('X', '0'), 2):04x} from BSDL file! ")
+    print("\tIDCODE read matches real IDCODE "
+          f"0x{int(real_idcode.replace('X', '0'), 2):04x} "
+          "from BSDL file! ")
 else:
     exit(-1)
 
@@ -50,7 +51,6 @@ cycles = 3
 frequency = 0.5
 print(f"Blinking LEDs at {frequency} Hz for {cycles} cycles...")
 blink_leds(device, boundary_length, led_d1, led_d2, cycles=cycles, frequency=frequency)
-
 print("Done!")
 
 device.close()
