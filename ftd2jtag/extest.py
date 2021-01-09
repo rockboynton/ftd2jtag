@@ -1,7 +1,7 @@
 """EXTEST JTAG support for ftd2jtag"""
-
 from .mpsse_commands import *
 from time import sleep
+
 
 def blink_leds(device, boundary_length, led_d1, led_d2, cycles=3, frequency=0.5):
     """Turns the LEDs on
@@ -35,7 +35,6 @@ def blink_leds(device, boundary_length, led_d1, led_d2, cycles=3, frequency=0.5)
     d2_off_d1_on[led_d2 // 8] &= ~(1 << (led_d2 % 8))  # D2 off
     d2_off_d1_on[led_d1 // 8] |= 1 << (led_d1 % 8)  # D1 on
 
-    # blink leds at 0.5 Hz
     for _ in range(cycles):
         _write_boundary_scan(device, boundary_length, d2_on_d1_off)
         sleep(1 / (2 * frequency))
@@ -102,6 +101,7 @@ def get_led_boundary_idx(bsdl_as_json, led_d1_pin, led_d2_pin):
     led_d2_boundary_idx = _get_boundary_idx_from_port(boundary_register, led_d2_port)
 
     return int(led_d1_boundary_idx), int(led_d2_boundary_idx)
+
 
 def _get_boundary_idx_from_port(boundary_register, port):
     """Gets boundary scan index from output port

@@ -25,24 +25,6 @@ def verify_idcode(device, idcode, idcode_opcode):
 
     return True
 
-
-def read_idcode(device):
-    """Reads IDCODE coming out of reset
-
-    Args:
-        device (FTD2XX): FTDI device
-
-    Returns:
-        str: IDCODE read from chip
-    """
-    data = bytearray()
-    data.extend((WRITE_BITS_TMS_NVE, 4, 0b11111))  # go to reset
-    data.extend((WRITE_BITS_TMS_NVE, 3, 0b0010))  # go to shift-dr
-    data.extend((READ_BYTES_NVE_LSB, 3, 0))  # read command
-    device.write(bytes(data))  # send off MPSSE commands
-    return device.read(4)[::-1].hex("_")  # return IDCODE
-
-
 def read_idcode_opcode(device, idcode_opcode):
     """Reads IDCODE using the opcode
 
@@ -65,6 +47,22 @@ def read_idcode_opcode(device, idcode_opcode):
     device.write(bytes(data))  # send off MPSSE commands
     idcode = device.read(4)[::-1]
     return "".join(format(byte, "08b") for byte in idcode)
+
+def read_idcode(device):
+    """Reads IDCODE coming out of reset
+
+    Args:
+        device (FTD2XX): FTDI device
+
+    Returns:
+        str: IDCODE read from chip
+    """
+    data = bytearray()
+    data.extend((WRITE_BITS_TMS_NVE, 4, 0b11111))  # go to reset
+    data.extend((WRITE_BITS_TMS_NVE, 3, 0b0010))  # go to shift-dr
+    data.extend((READ_BYTES_NVE_LSB, 3, 0))  # read command
+    device.write(bytes(data))  # send off MPSSE commands
+    return device.read(4)[::-1].hex("_")  # return IDCODE
 
 
 def get_idcode_opcode(bsdl_as_json):
