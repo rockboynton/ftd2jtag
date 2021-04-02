@@ -1,4 +1,4 @@
-# JTAG Interview Question
+# JTAG Exercise
 
 This is a small software application written in Python that interacts with a
 Xilinx XC2C64A chip mounted on a CoolRunner-II development board.
